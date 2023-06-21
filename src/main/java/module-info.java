@@ -1,7 +1,8 @@
 module org.pixellauncher {
-    requires  javafx.controls;
-    requires javafx.fxml;
     requires kotlin.stdlib;
+
+    requires javafx.controls;
+    requires javafx.fxml;
 
     exports org.pixellauncher;
 }
