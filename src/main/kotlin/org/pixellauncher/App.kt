@@ -5,9 +5,9 @@ import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Stage
 
-class HelloApplication : Application() {
+class App : Application() {
     override fun start(primaryStage: Stage) {
-        val fxmlLoader = FXMLLoader(HelloApplication::class.java.getResource("ui/Main.fxml"))
+        val fxmlLoader = FXMLLoader(App::class.java.getResource("Main.fxml"))
         val scene = Scene(fxmlLoader.load(), 600.0, 400.0)
         primaryStage.title = "PixelLauncher"
         primaryStage.scene = scene
@@ -16,5 +16,5 @@ class HelloApplication : Application() {
 }
 
 fun main() {
-    Application.launch(HelloApplication::class.java)
+    Application.launch(App::class.java)
 }

@@ -29,7 +29,7 @@ kotlin {
 
 application {
     mainModule.set("$group")
-    mainClass.set("$group.AppKt")
+    mainClass.set("$group.App")
 }
 
 javafx {
