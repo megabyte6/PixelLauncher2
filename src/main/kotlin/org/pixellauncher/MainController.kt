@@ -4,7 +4,6 @@ import javafx.fxml.FXML
 import javafx.scene.control.Label
 
 class MainController {
-
     @FXML
     private lateinit var welcomeText: Label
 
@@ -12,5 +11,4 @@ class MainController {
     private fun onHelloButtonClick() {
         welcomeText.text = "Welcome to JavaFX Application!"
     }
-
 }

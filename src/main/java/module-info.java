@@ -4,5 +4,6 @@ module org.pixellauncher {
     requires javafx.controls;
     requires javafx.fxml;
 
+    opens org.pixellauncher to javafx.fxml;
     exports org.pixellauncher;
 }
