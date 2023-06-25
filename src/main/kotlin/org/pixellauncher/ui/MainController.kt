@@ -1,4 +1,4 @@
-package org.pixellauncher
+package org.pixellauncher.ui
 
 import javafx.fxml.FXML
 import javafx.scene.control.Label

@@ -1,6 +1,7 @@
 plugins {
     // Kotlin support.
     kotlin("jvm") version "1.8.21"
+    kotlin("plugin.serialization") version "1.8.22"
 
     // Support for running JavaFX applications.
     application
@@ -20,6 +21,9 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    implementation("org.jfxtras:jmetro:11.6.16")
+
     testImplementation(kotlin("test"))
 }
 
