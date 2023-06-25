@@ -3,6 +3,9 @@ package org.pixellauncher
 import javafx.fxml.FXMLLoader
 import java.io.InputStream
 import java.net.URL
+import java.nio.file.Files
+import java.nio.file.Path
+import kotlin.io.path.toPath
 
 
 object ResourceLoader {
@@ -21,7 +24,7 @@ object ResourceLoader {
      * @return A {@link URL} representing the resource.
      */
     fun loadURL(path: String): URL {
-        return ResourceLoader::class.java.getResource(path)
+        return ResourceLoader::class.java.getResource("/assets/$path")
             ?: throw IllegalArgumentException("Resource not found: $path")
     }
 
@@ -31,7 +34,7 @@ object ResourceLoader {
      * @return An [InputStream] of the resource.
      */
     fun loadStream(path: String): InputStream {
-        return ResourceLoader::class.java.getResourceAsStream(path)
+        return ResourceLoader::class.java.getResourceAsStream("/assets/$path")
             ?: throw IllegalArgumentException("Resource not found: $path")
     }
 
@@ -47,6 +50,16 @@ object ResourceLoader {
         if (!path.endsWith(".fxml")) {
             path += ".fxml"
         }
-        return FXMLLoader(loadURL("ui/$path"))
+        return FXMLLoader(loadURL("fxml/$path"))
+    }
+
+    /**
+     * Read the contents of a file.
+     *
+     * @param path The location of the file.
+     * @return The contents of the file as a string.
+     */
+    fun readContents(path: String): String {
+        return Files.readString(loadURL(path).toURI().toPath())
     }
 }

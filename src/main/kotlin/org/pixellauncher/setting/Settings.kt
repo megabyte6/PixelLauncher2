@@ -19,7 +19,7 @@ private val json = Json { prettyPrint = true }
 data class Settings(
     val saveWindowSize: Boolean = true,
     @Serializable(with = Dimension2DSerializer::class)
-    val windowSize: Dimension2D = Dimension2D(600.0, 400.0),
+    val windowSize: Dimension2D = Dimension2D(1000.0, 600.0),
     val saveWindowPos: Boolean = true,
     @Serializable(with = Point2DSerializer::class)
     val windowPos: Point2D = Point2D(
