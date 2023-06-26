@@ -14,15 +14,6 @@ import kotlin.io.path.toPath
 object ResourceLoader {
     /**
      * @param path The location of the resource to load. Excluding the
-     * `assets` directory.
-     * @return A [String] of the [URL] of the path.
-     */
-    fun load(path: String): String {
-        return loadURL(path).toString()
-    }
-
-    /**
-     * @param path The location of the resource to load. Excluding the
      *             {@code assets} directory.
      * @return A {@link URL} representing the resource.
      */
@@ -56,14 +47,20 @@ object ResourceLoader {
         return FXMLLoader(loadURL("fxml/$path"))
     }
 
+    /**
+     * Load the given `fxml` file as a [Scene].
+     *
+     * @param name The name of the `fxml` file to load.
+     * @return The `fxml` file as a [Scene].
+     */
     fun loadScene(name: String): Scene {
-        logger.debug("Loading $name scene")
+        LOGGER.debug("Loading $name scene")
         val fxmlLoader = loadFXML(name)
         val root = fxmlLoader.load<Parent>()
-        logger.debug("Loading theme")
+        LOGGER.debug("Loading theme")
         root.style = loadStylesheetFromTheme(App.settings.theme)
         val scene = Scene(root)
-        logger.debug("Applying theme")
+        LOGGER.debug("Applying theme")
         JMetro(scene, App.settings.theme)
 
         return scene

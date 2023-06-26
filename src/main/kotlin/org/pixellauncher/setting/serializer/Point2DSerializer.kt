@@ -16,8 +16,7 @@ object Point2DSerializer: KSerializer<Point2D> {
     }
 
     override fun deserialize(decoder: Decoder): Point2D {
-        val input = decoder.decodeString()
-        val json = Json.parseToJsonElement(input).jsonObject
+        val json = decoder.decodeSerializableValue(JsonObject.serializer())
 
         val x = json["x"]?.jsonPrimitive?.double ?: 0.0
         val y = json["y"]?.jsonPrimitive?.double ?: 0.0
@@ -31,6 +30,6 @@ object Point2DSerializer: KSerializer<Point2D> {
             put("y", JsonPrimitive(value.y))
         }
 
-        encoder.encodeString(data.toString())
+        encoder.encodeSerializableValue(JsonObject.serializer(), data)
     }
 }

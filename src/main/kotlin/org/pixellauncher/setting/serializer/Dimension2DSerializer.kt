@@ -16,8 +16,7 @@ object Dimension2DSerializer : KSerializer<Dimension2D> {
     }
 
     override fun deserialize(decoder: Decoder): Dimension2D {
-        val input = decoder.decodeString()
-        val json = Json.parseToJsonElement(input).jsonObject
+        val json = decoder.decodeSerializableValue(JsonObject.serializer())
 
         val width = json["width"]?.jsonPrimitive?.double ?: 0.0
         val height = json["height"]?.jsonPrimitive?.double ?: 0.0
@@ -31,7 +30,7 @@ object Dimension2DSerializer : KSerializer<Dimension2D> {
             put("height", JsonPrimitive(value.height))
         }
 
-        encoder.encodeString(data.toString())
+        encoder.encodeSerializableValue(JsonObject.serializer(), data)
     }
 
 }

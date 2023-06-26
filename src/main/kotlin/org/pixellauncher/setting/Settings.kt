@@ -5,15 +5,15 @@ import javafx.geometry.Point2D
 import javafx.stage.Screen
 import jfxtras.styles.jmetro.Style
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.pixellauncher.LOGGER
 import org.pixellauncher.setting.serializer.Dimension2DSerializer
 import org.pixellauncher.setting.serializer.Point2DSerializer
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Path
-
-private val json = Json { prettyPrint = true }
 
 @Serializable
 data class Settings(
@@ -30,8 +30,28 @@ data class Settings(
     var theme: Style = Style.DARK
 ) {
     companion object {
-        fun load(path: Path): Settings {
-            return Settings()
+        private val json = Json {
+            prettyPrint = true
+            encodeDefaults = true
+        }
+
+        private fun load(path: Path): Settings {
+            if (!Files.exists(path) || !Files.isReadable(path)) {
+                throw IOException("Cannot read settings. Path: $path is not readable.")
+            }
+
+            val data = Files.readString(path)
+            return json.decodeFromString(data)
+        }
+
+        fun loadElseDefault(path: Path): Settings {
+            return try {
+                load(path)
+            } catch (e: IOException) {
+                LOGGER.warn("Settings failed to load. Using default.")
+                LOGGER.catching(e)
+                Settings()
+            }
         }
     }
 
