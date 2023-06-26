@@ -21,8 +21,14 @@ repositories {
 }
 
 dependencies {
+    implementation("org.apache.logging.log4j:log4j-api:3.0.0-alpha1")
+    implementation("org.apache.logging.log4j:log4j-core:3.0.0-alpha1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation("org.jfxtras:jmetro:11.6.16")
+
+//    implementation("eu.iamgio:animated:0.7.0")
+//    implementation("io.github.typhon0:AnimateFX:1.2.3")
+//    implementation("org.kordamp.ikonli:ikonli-javafx:12.3.1")
 
     testImplementation(kotlin("test"))
 }
@@ -42,7 +48,7 @@ javafx {
 }
 
 jlink {
-    imageZip.set(project.file("$buildDir/distributions/${rootProject.name}-${javafx.platform.classifier}.zip"))
+    imageZip.set(file("$buildDir/distributions/${rootProject.name}-${javafx.platform.classifier}.zip"))
     options.set(
         listOf(
             "--strip-debug",
@@ -53,6 +59,7 @@ jlink {
     )
     launcher {
         name = rootProject.name
+        noConsole = true
     }
 
     jpackage {

@@ -1,10 +1,13 @@
 package org.pixellauncher
 
 import javafx.fxml.FXMLLoader
+import javafx.scene.Parent
+import javafx.scene.Scene
+import jfxtras.styles.jmetro.JMetro
+import jfxtras.styles.jmetro.Style
 import java.io.InputStream
 import java.net.URL
 import java.nio.file.Files
-import java.nio.file.Path
 import kotlin.io.path.toPath
 
 
@@ -51,6 +54,32 @@ object ResourceLoader {
             path += ".fxml"
         }
         return FXMLLoader(loadURL("fxml/$path"))
+    }
+
+    fun loadScene(name: String): Scene {
+        logger.debug("Loading $name scene")
+        val fxmlLoader = loadFXML(name)
+        val root = fxmlLoader.load<Parent>()
+        logger.debug("Loading theme")
+        root.style = loadStylesheetFromTheme(App.settings.theme)
+        val scene = Scene(root)
+        logger.debug("Applying theme")
+        JMetro(scene, App.settings.theme)
+
+        return scene
+    }
+
+    /**
+     * Load the correct stylesheet for the given theme.
+     *
+     * @param theme The theme to load.
+     * @return The stylesheet as a [String].
+     */
+    fun loadStylesheetFromTheme(theme: Style): String {
+        return when (theme) {
+            Style.LIGHT -> readContents("css/light.css")
+            Style.DARK -> readContents("css/dark.css")
+        }
     }
 
     /**

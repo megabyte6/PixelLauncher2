@@ -2,6 +2,8 @@ package org.pixellauncher.controller
 
 import javafx.fxml.FXML
 import javafx.scene.layout.FlowPane
+import org.pixellauncher.ResourceLoader
+import org.pixellauncher.dialog.Popup
 
 class MainController {
     @FXML
@@ -9,11 +11,11 @@ class MainController {
 
     @FXML
     private fun handleAccountButton() {
-        TODO("Not yet implemented")
+        Popup.popup(ResourceLoader.loadScene("AccountManager"))
     }
 
     @FXML
     private fun handleSettingsButton() {
-        TODO("Not yet implemented")
+        Popup.popup(ResourceLoader.loadScene("Settings"))
     }
 }

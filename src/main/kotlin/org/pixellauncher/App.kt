@@ -1,34 +1,46 @@
 package org.pixellauncher
 
 import javafx.application.Application
-import javafx.scene.Parent
-import javafx.scene.Scene
+import javafx.scene.image.Image
 import javafx.stage.Stage
-import jfxtras.styles.jmetro.JMetro
-import jfxtras.styles.jmetro.Style
+import org.apache.logging.log4j.LogManager
 import org.pixellauncher.setting.Settings
 
+val logger = LogManager.getLogger(App::class.java)!!
+
 class App : Application() {
-    private val settings = Settings()
-    val themeEngine = JMetro(settings.theme)
+    companion object {
+        val settings = Settings.load(Constants.CONFIG_PATH)
+    }
 
     override fun start(primaryStage: Stage) {
-        val fxmlLoader = ResourceLoader.loadFXML("Main")
-        val root = fxmlLoader.load<Parent>()
-        root.style = ResourceLoader.readContents(
-            if (settings.theme == Style.DARK) {
-                "css/dark.css"
-            } else {
-                "css/light.css"
-            }
-        )
-        val scene = Scene(root, settings.windowSize.width, settings.windowSize.height)
+        primaryStage.scene = ResourceLoader.loadScene("Main")
 
-        themeEngine.scene = scene
+        if (settings.saveWindowPos) {
+            logger.debug("Restoring window location")
+            primaryStage.x = settings.windowPos.x
+            primaryStage.y = settings.windowPos.y
+        }
+        if (settings.saveWindowSize) {
+            logger.debug("Restoring window size")
+            primaryStage.width = settings.windowSize.width
+            primaryStage.height = settings.windowSize.height
+        }
 
+        logger.debug("Loading icon")
+        primaryStage.icons.add(Image(ResourceLoader.loadStream("Pixel Launcher.png")))
         primaryStage.title = Constants.APP_NAME
-        primaryStage.scene = scene
+
+        logger.info("Showing window")
         primaryStage.show()
+    }
+
+    override fun stop() {
+        super.stop()
+
+        settings.save(Constants.CONFIG_PATH)
+
+        logger.info("Stopping ${Constants.APP_NAME}")
     }
 }
 

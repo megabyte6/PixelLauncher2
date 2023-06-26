@@ -62,7 +62,7 @@ enum class OS {
         }
 
         fun isUsingFlatpak(): Boolean {
-            return OS.isLinux() && Files.exists(Path.of("/.flatpak-info"))
+            return isLinux() && Files.exists(Path.of("/.flatpak-info"))
         }
     }
 }

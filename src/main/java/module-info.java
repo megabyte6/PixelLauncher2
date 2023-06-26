@@ -4,9 +4,11 @@ module org.pixellauncher {
 
     requires javafx.controls;
     requires javafx.fxml;
+    opens org.pixellauncher.controller to javafx.fxml;
+
+    requires org.apache.logging.log4j;
 
     requires org.jfxtras.styles.jmetro;
 
-    opens org.pixellauncher.controller to javafx.fxml;
     exports org.pixellauncher;
 }

@@ -17,18 +17,24 @@ private val json = Json { prettyPrint = true }
 
 @Serializable
 data class Settings(
-    val saveWindowSize: Boolean = true,
+    var saveWindowSize: Boolean = true,
     @Serializable(with = Dimension2DSerializer::class)
-    val windowSize: Dimension2D = Dimension2D(1000.0, 600.0),
-    val saveWindowPos: Boolean = true,
+    var windowSize: Dimension2D = Dimension2D(1000.0, 600.0),
+    var saveWindowPos: Boolean = true,
     @Serializable(with = Point2DSerializer::class)
-    val windowPos: Point2D = Point2D(
+    var windowPos: Point2D = Point2D(
         (Screen.getPrimary().bounds.width - windowSize.width) / 2,
         (Screen.getPrimary().bounds.height - windowSize.height) / 2
     ),
 
-    val theme: Style = Style.DARK
+    var theme: Style = Style.DARK
 ) {
+    companion object {
+        fun load(path: Path): Settings {
+            return Settings()
+        }
+    }
+
     fun save(path: Path) {
         if (!Files.isWritable(path.parent)) {
             throw IOException("Cannot write settings. Path: $path is not writable.")
@@ -36,9 +42,5 @@ data class Settings(
 
         val data = json.encodeToString(this)
         Files.writeString(path, data)
-    }
-
-    fun loadFromSave(path: Path) {
-        TODO("Not yet implemented")
     }
 }
