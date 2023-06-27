@@ -40,7 +40,7 @@ enum class OS {
 
             return when (getOS()) {
                 WINDOWS -> Paths.get(System.getenv("APPDATA"))
-                    .resolve(Constants.APP_NAME)
+                    .resolve(Constants.APP_NAME.removeWhitespace())
 
                 MAC_OS -> Paths.get(System.getProperty("user.home"))
                     .resolve("Library")
@@ -50,7 +50,7 @@ enum class OS {
                 LINUX -> Paths.get(System.getProperty("user.home"))
                     .resolve(".local")
                     .resolve("share")
-                    .resolve(Constants.APP_NAME.replace("\\s+".toRegex(), "").lowercase())
+                    .resolve(Constants.APP_NAME.removeWhitespace().lowercase())
             }
         }
 
