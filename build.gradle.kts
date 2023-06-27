@@ -65,11 +65,11 @@ jlink {
     jpackage {
         imageName = rootProject.name
         installerName = "${rootProject.name}-installer"
-        vendor = "megabyte6"
+        vendor = "Brayden Chan"
 
         val osName = System.getProperty("os.name").toLowerCase()
         if (osName.indexOf("windows") != -1) {
-            icon = "src/main/resources/icon.ico"
+            icon = "src/main/resources/assets/Pixel Launcher.ico"
             installerOptions = listOf(
                 "--win-per-user-install",
                 "--win-dir-chooser",
@@ -79,7 +79,7 @@ jlink {
                 "--win-shortcut-prompt",
             )
         } else if (osName.indexOf("mac") != -1) {
-            icon = "src/main/resources/icon.icns"
+            icon = "src/main/resources/assets/Pixel Launcher.icns"
         }
     }
 }
