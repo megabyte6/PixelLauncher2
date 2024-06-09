@@ -6,11 +6,12 @@ import javafx.geometry.Point2D
 import javafx.scene.image.Image
 import javafx.stage.Stage
 import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
 import org.pixellauncher.setting.Settings
 import org.pixellauncher.util.OS
 import java.io.IOException
 
-val LOGGER = LogManager.getLogger(App::class.java)!!
+val LOGGER: Logger = LogManager.getLogger("Main")
 
 class App : Application() {
     companion object {
