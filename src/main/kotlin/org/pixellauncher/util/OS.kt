@@ -34,7 +34,7 @@ enum class OS {
         fun getStoragePath(): Path {
             val portableStoragePath = Path.of("data")
 
-            if (Files.exists(portableStoragePath)) {
+            if (Files.exists(portableStoragePath) && Files.isDirectory(portableStoragePath)) {
                 return portableStoragePath
             }
 
